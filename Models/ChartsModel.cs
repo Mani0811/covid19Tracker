@@ -49,27 +49,35 @@ namespace AspNetCoreTodo.Models
         {
             Series dailyConfirmed = new Series();
             dailyConfirmed.data = new List<int?>();
+            dailyConfirmed.name = "dailyConfirmed";
 
             Series dailyDeceased = new Series();
             dailyDeceased.data = new List<int?>();
+            dailyDeceased.name = "dailyDeceased";
 
             Series dailyRecovered = new Series();
             dailyRecovered.data = new List<int?>();
+            dailyRecovered.name = "dailyRecovered";
 
             Series death = new Series();
             death.data = new List<int?>();
+            death.name = "death";
 
             Series rec = new Series();
             rec.data = new List<int?>();
+            rec.name = "rec";
 
             Series totalConfirmed = new Series();
             totalConfirmed.data = new List<int?>();
+            totalConfirmed.name = "totalConfirmed";
 
             Series totalDeceased = new Series();
             totalDeceased.data = new List<int?>();
+            totalDeceased.name = "totalDeceased";
 
             Series totalRecovered = new Series();
             totalRecovered.data = new List<int?>();
+            totalRecovered.name = "totalRecovered";
 
             List<Series> all = new List<Series>();
 
