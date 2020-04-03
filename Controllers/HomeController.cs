@@ -33,7 +33,12 @@ namespace AspNetCoreTodo.Controllers
 
             NationDataModel nationDataModel = JsonConvert.DeserializeObject<NationDataModel>(test);
 
-            return View(nationDataModel);
+            ChartsModel chartsModel = ChartsModelMapper.Map(nationDataModel);
+            var stringModel = JsonConvert.SerializeObject(chartsModel);
+
+            
+
+            return View(chartsModel);
         }
 
         public IActionResult About()
