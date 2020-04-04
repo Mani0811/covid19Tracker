@@ -3,6 +3,12 @@
     ViewData["Title"] = "Covid19 Tracker";
 }
 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 <style>
     .highcharts-figure, .highcharts-data-table table {
         min-width: 310px;
@@ -42,40 +48,98 @@
     .highcharts-data-table tr:hover {
         background: #f1f7ff;
     }
+
+    .highcharts-container {
+        width: 100% !important;
+    }
+
+    .highcharts-root {
+        width: 100% !important;
+    }
+
 </style>
-
-<div class="row">
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/series-label.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
-    <figure class="highcharts-figure">
-        <div id="container"></div>        
-    </figure>
-</div>
-
-<div class="row">
-    @foreach (var item in Model.statewise)
-    {
-    <div class="col-md-3">
-        <h2>@item.state</h2>
-        <ul>
-            <li>confirmed: @item.confirmed</li>
-            <li>active: @item.active</li>
-            <li>deaths: @item.deaths</li>
-        </ul>
+<div class="container">
+    <br />
+    <div class="row">
+        <div class="col-xs-6 col-md-4">
+            <div class="card shadow-lg r-3 l-3 mb-5 bg-white rounded" style="width: 20rem;">
+                <div class="card-header">
+                    Total Confirmed :
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@Model.statewise[0].confirmed</li>                    
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div class="card shadow-lg r-3 l-3 mb-5 bg-white rounded" style="width: 20rem;">
+                <div class="card-header">
+                    Total Death :
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@Model.statewise[0].deaths</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div class="card shadow-lg r-3 l-3 mb-5 bg-white rounded" style="width: 20rem;">
+                <div class="card-header">
+                    Total Recovered :
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@Model.statewise[0].recovered</li>
+                </ul>
+            </div>
+        </div>
     </div>
-    }    
-</div>
 
+    
+        <figure class="highcharts-figure">
+            <div id="container"></div>
+        </figure>
+    
+
+        <div class="row">
+
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Confirmed</th>
+                        <th scope="col">Active</th>
+                        <th scope="col">Deaths</th>
+                    </tr>
+
+                    @{int i = 0;}
+                    @foreach (var item in Model.statewise)
+                    {
+                        if (i != 0)
+                        {
+                            <tr>
+                                <th scope="row">@i</th>
+                                <td>@item.state</td>
+                                <td>@item.confirmed</td>
+                                <td>@item.active</td>
+                                <td>@item.deaths</td>
+                            </tr>
+                        }
+                        i++;                        
+                    }
+
+                </thead>
+                <tbody></tbody>
+            </table>
+</div>
+</div>
 <script>
     Highcharts.chart('container', {
         xAxis: {
             categories:  @Html.Raw(@Model.categoriesString)
         },
-
+        title: {
+            text: 'India Covid-19 Count'
+        },
         series: @Html.Raw(@Model.allSeriesString)
     });
 </script>
