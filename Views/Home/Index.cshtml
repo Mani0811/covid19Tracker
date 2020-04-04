@@ -1,6 +1,6 @@
 ﻿@model ChartsModel;
 @{
-    ViewData["Title"] = "Covid19 Tracker";
+    ViewData["Title"] = "INDIA COVID-19 TRACKER - AskGif";
 }
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -61,34 +61,45 @@
 <div class="container">
     <br />
     <div class="row">
-        <div class="col-xs-6 col-md-4">
-            <div class="card shadow-lg r-3 l-3 mb-5 bg-white rounded" style="width: 20rem;">
+        <div class="col-xs-6 col-md-3">
+            <div class="card text-white shadow-lg r-3 l-3 mb-5 bg-info rounded" style="width: 20rem;">
                 <div class="card-header">
                     Total Confirmed :
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">@Model.statewise[0].confirmed</li>                    
-                </ul>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.statewise[0].confirmed ( @Model.statewise[0].delta.confirmed )</h5>
+                </div>
             </div>
         </div>
-        <div class="col-xs-6 col-md-4">
-            <div class="card shadow-lg r-3 l-3 mb-5 bg-white rounded" style="width: 20rem;">
+        <div class="col-xs-6 col-md-3">
+            <div class="card text-white shadow-lg r-3 l-3 mb-5 bg-primary rounded" style="width: 20rem;">
+                <div class="card-header">
+                    Total Active :
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.statewise[0].active ( @Model.statewise[0].delta.active )</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-3">
+            <div class="card text-white shadow-lg r-3 l-3 mb-5 bg-danger rounded" style="width: 20rem;">
                 <div class="card-header">
                     Total Death :
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">@Model.statewise[0].deaths</li>
-                </ul>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.statewise[0].deaths ( @Model.statewise[0].delta.deaths )</h5>
+                </div>
             </div>
         </div>
-        <div class="col-xs-6 col-md-4">
-            <div class="card shadow-lg r-3 l-3 mb-5 bg-white rounded" style="width: 20rem;">
+        <div class="col-xs-6 col-md-3">
+            <div class="card text-white shadow-lg r-3 l-3 mb-5 bg-success rounded" style="width: 20rem;">
                 <div class="card-header">
                     Total Recovered :
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">@Model.statewise[0].recovered</li>
-                </ul>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.statewise[0].recovered ( @Model.statewise[0].delta.recovered )</h5>
+                </div>
+
             </div>
         </div>
     </div>
@@ -108,6 +119,7 @@
                         <th scope="col">State</th>
                         <th scope="col">Confirmed</th>
                         <th scope="col">Active</th>
+                        <th scope="col">Recovered</th>
                         <th scope="col">Deaths</th>
                     </tr>
 
@@ -116,13 +128,14 @@
                     {
                         if (i != 0)
                         {
-                            <tr>
-                                <th scope="row">@i</th>
-                                <td>@item.state</td>
-                                <td>@item.confirmed</td>
-                                <td>@item.active</td>
-                                <td>@item.deaths</td>
-                            </tr>
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td>@item.state</td>
+                        <td>@item.confirmed ( @item.delta.confirmed )</td>
+                        <td>@item.active ( @item.delta.active )</td>
+                        <td>@item.recovered ( @item.delta.recovered )</td>
+                        <td>@item.deaths ( @item.delta.deaths )</td>
+                    </tr>
                         }
                         i++;                        
                     }
