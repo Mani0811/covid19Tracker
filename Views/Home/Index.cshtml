@@ -56,7 +56,6 @@
     .highcharts-root {
         width: 100% !important;
     }
-
 </style>
 <div class="container">
     <br />
@@ -107,55 +106,55 @@
         </div>
     </div>
 
-    
-        <figure class="highcharts-figure">
-            <div id="container"></div>
-        </figure>
-    
 
-        <div class="row">
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+    </figure>
 
-            <table class="table table-striped">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">State</th>
-                        <th scope="col">Confirmed</th>
-                        <th scope="col">Active</th>
-                        <th scope="col">Recovered</th>
-                        <th scope="col">Deaths</th>
-                    </tr>
 
-                    @{int i = 0;}
-                    @foreach (var item in Model.statewise)
+    <div class="row">
+
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Confirmed</th>
+                    <th scope="col">Active</th>
+                    <th scope="col">Recovered</th>
+                    <th scope="col">Deaths</th>
+                </tr>
+
+                @{int i = 0;}
+                @foreach (var item in Model.statewise)
+                {
+                    if (i != 0)
                     {
-                        if (i != 0)
-                        {
-                    <tr>
-                        <th scope="row">@i</th>
-                        <td>
-                            <b>@item.state</b>
-                            
-                             @if (item.delta.confirmed != 0)
-                             {
-                                 <i class="fa fa-arrow-circle-up" style="color:red"></i>
-                                 @item.delta.confirmed
-                             }
-                            
-                        </td>
-                        <td><p class="text-info"><b>@item.confirmed</b></p> @*( <i class="fa fa-arrow-circle-up" style="color:red"></i> @item.delta.confirmed )*@</td>
-                        <td><p class="text-primary"><b>@item.active</b></p> @*( @item.delta.active )*@</td>
-                        <td><p class="text-success"><b>@item.recovered</b></p> @*( <i class="fa fa-arrow-circle-up" style="color:green"></i> @item.delta.recovered )*@</td>
-                        <td><p class="text-danger"><b>@item.deaths</b></p> @*( <i class="fa fa-arrow-circle-up" style="color:red"></i> @item.delta.deaths )*@</td>
-                    </tr>
-                        }
-                        i++;                        
-                    }
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>
+                                <b>@item.state</b>
 
-                </thead>
-                <tbody></tbody>
-            </table>
-</div>
+                                @if (item.delta.confirmed != 0)
+                                {
+                                    <i class="fa fa-arrow-circle-up" style="color:red"></i>
+                                    @item.delta.confirmed
+                                }
+
+                            </td>
+                            <td><p class="text-info"><b>@item.confirmed</b></p> @*( <i class="fa fa-arrow-circle-up" style="color:red"></i> @item.delta.confirmed )*@</td>
+                            <td><p class="text-primary"><b>@item.active</b></p> @*( @item.delta.active )*@</td>
+                            <td><p class="text-success"><b>@item.recovered</b></p> @*( <i class="fa fa-arrow-circle-up" style="color:green"></i> @item.delta.recovered )*@</td>
+                            <td><p class="text-danger"><b>@item.deaths</b></p> @*( <i class="fa fa-arrow-circle-up" style="color:red"></i> @item.delta.deaths )*@</td>
+                        </tr>
+                    }
+                    i++;
+                }
+
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
 <script>
     Highcharts.chart('container', {
@@ -167,16 +166,15 @@
         },
         series: @Html.Raw(@Model.allSeriesString)
     });
-    
-    (function () {
-        (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-118778979-1', 'auto', { 'cookieDomain': 'none' });
-        ga('require', 'displayfeatures');
-        ga('send', 'pageview', { 'page': '/Covid-19-Tracker' });
-    })();
 </script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-162801745-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-162801745-1');
+</script>
+
+
