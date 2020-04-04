@@ -70,7 +70,7 @@
                     Total Confirmed :
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">@Model.statewise[0].confirmed ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.confirmed )</h5>
+                    <h5 class="card-title"><b>@Model.statewise[0].confirmed</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.confirmed )</h5>
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@
                     Total Active :
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">@Model.statewise[0].active ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.active )</h5>
+                    <h5 class="card-title"><b>@Model.statewise[0].active</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.active )</h5>
                 </div>
             </div>
         </div>
@@ -90,7 +90,7 @@
                     Total Death :
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">@Model.statewise[0].deaths ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.deaths )</h5>
+                    <h5 class="card-title"><b>@Model.statewise[0].deaths</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.deaths )</h5>
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
                     Total Recovered :
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">@Model.statewise[0].recovered ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.recovered )</h5>
+                    <h5 class="card-title"><b>@Model.statewise[0].recovered</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.recovered )</h5>
                 </div>
 
             </div>
@@ -115,7 +115,7 @@
 
         <div class="row">
 
-            <table class="table">
+            <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">#</th>
@@ -133,11 +133,20 @@
                         {
                     <tr>
                         <th scope="row">@i</th>
-                        <td>@item.state</td>
-                        <td>@item.confirmed ( @item.delta.confirmed )</td>
-                        <td>@item.active ( @item.delta.active )</td>
-                        <td>@item.recovered ( @item.delta.recovered )</td>
-                        <td>@item.deaths ( @item.delta.deaths )</td>
+                        <td>
+                            <b>@item.state</b>
+                            
+                             @if (item.delta.confirmed != 0)
+                             {
+                                 <i class="fa fa-arrow-circle-up" style="color:red"></i>
+                                 @item.delta.confirmed
+                             }
+                            
+                        </td>
+                        <td><p class="text-info"><b>@item.confirmed</b></p> @*( <i class="fa fa-arrow-circle-up" style="color:red"></i> @item.delta.confirmed )*@</td>
+                        <td><p class="text-primary"><b>@item.active</b></p> @*( @item.delta.active )*@</td>
+                        <td><p class="text-success"><b>@item.recovered</b></p> @*( <i class="fa fa-arrow-circle-up" style="color:green"></i> @item.delta.recovered )*@</td>
+                        <td><p class="text-danger"><b>@item.deaths</b></p> @*( <i class="fa fa-arrow-circle-up" style="color:red"></i> @item.delta.deaths )*@</td>
                     </tr>
                         }
                         i++;                        
@@ -158,4 +167,16 @@
         },
         series: @Html.Raw(@Model.allSeriesString)
     });
+
+    (function () {
+        (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-118778979-1', 'auto', { 'cookieDomain': 'none' });
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview', { 'page': '/Covid-19-Tracker' });
+    })();
 </script>
