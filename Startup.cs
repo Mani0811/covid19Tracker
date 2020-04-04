@@ -26,20 +26,20 @@ namespace AspNetCoreTodo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            //services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddDefaultTokenProviders();
 
             // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.AddSingleton<IEmailSender, EmailSender>();
+            //services.AddTransient<IEmailSender, EmailSender>();
+            //services.AddSingleton<IEmailSender, EmailSender>();
             services.AddMvc();
 
-            services.AddScoped<ITodoItemService, TodoItemService>();
+            //services.AddScoped<ITodoItemService, TodoItemService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +57,7 @@ namespace AspNetCoreTodo
 
             app.UseStaticFiles();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
