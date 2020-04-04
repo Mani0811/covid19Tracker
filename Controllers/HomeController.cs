@@ -9,6 +9,7 @@ using RestSharp;
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace AspNetCoreTodo.Controllers
 {
@@ -16,28 +17,39 @@ namespace AspNetCoreTodo.Controllers
     {
         private RestClient client = new RestClient("https://api.covid19india.org/");
 
+        private readonly IMemoryCache memoryCache;
+
+        public HomeController(IMemoryCache memoryCache)
+        {
+            this.memoryCache = memoryCache;
+        }
+
         public IActionResult Index()
         {
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.covid19india.org/data.json");
-            request.Method = "GET";
-            String test = String.Empty;
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            ChartsModel chartsModel = new ChartsModel();
+            bool isExist = memoryCache.TryGetValue("Data", out chartsModel);
+            if (!isExist)
             {
-                Stream dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                test = reader.ReadToEnd();
-                reader.Close();
-                dataStream.Close();
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.covid19india.org/data.json");
+                request.Method = "GET";
+                string nationDataModelString = string.Empty;
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    nationDataModelString = reader.ReadToEnd();
+                    reader.Close();
+                    dataStream.Close();
+                }
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromMinutes(15));
+                var nationDataModel = JsonConvert.DeserializeObject<NationDataModel>(nationDataModelString);
+                chartsModel = ChartsModelMapper.Map(nationDataModel);
+                var stringModel = JsonConvert.SerializeObject(chartsModel);
+                memoryCache.Set("Data", chartsModel, cacheEntryOptions);
             }
-
-            NationDataModel nationDataModel = JsonConvert.DeserializeObject<NationDataModel>(test);
-
-            ChartsModel chartsModel = ChartsModelMapper.Map(nationDataModel);
-            var stringModel = JsonConvert.SerializeObject(chartsModel);
-
             
-
             return View(chartsModel);
         }
 

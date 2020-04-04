@@ -38,6 +38,7 @@ namespace AspNetCoreTodo
             //services.AddTransient<IEmailSender, EmailSender>();
             //services.AddSingleton<IEmailSender, EmailSender>();
             services.AddMvc();
+            services.AddMemoryCache();
 
             //services.AddScoped<ITodoItemService, TodoItemService>();
         }
