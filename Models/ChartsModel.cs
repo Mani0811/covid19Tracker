@@ -92,7 +92,7 @@ namespace AspNetCoreTodo.Models
                 totalRecovered.data.Add(ParseToNullableInt(item.totalrecovered));
             }
 
-            all.Add(dailyConfirmed);
+            //all.Add(dailyConfirmed);
             all.Add(dailyDeceased);
             all.Add(dailyRecovered);
             //all.Add(death);
