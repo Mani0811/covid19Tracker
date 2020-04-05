@@ -16,7 +16,7 @@ namespace AspNetCoreTodo
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args);
-            InitializeDatabase(host);
+           // InitializeDatabase(host);
             host.Run();
         }
 

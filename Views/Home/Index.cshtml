@@ -69,7 +69,7 @@
                     Total Confirmed :
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title"><b>@Model.statewise[0].confirmed</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.confirmed )</h5>
+                    <h5 class="card-title"><b>@Model.statewise[0].confirmed</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta?.confirmed )</h5>
                 </div>
             </div>
         </div>
@@ -79,7 +79,7 @@
                     Total Active :
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title"><b>@Model.statewise[0].active</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.active )</h5>
+                    <h5 class="card-title"><b>@Model.statewise[0].active</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta?.active )</h5>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
                     Total Death :
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title"><b>@Model.statewise[0].deaths</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.deaths )</h5>
+                    <h5 class="card-title"><b>@Model.statewise[0].deaths</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta?.deaths )</h5>
                 </div>
             </div>
         </div>
@@ -99,7 +99,7 @@
                     Total Recovered :
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title"><b>@Model.statewise[0].recovered</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta.recovered )</h5>
+                    <h5 class="card-title"><b>@Model.statewise[0].recovered</b> ( <i class="fa fa-arrow-circle-up"></i> @Model.statewise[0].delta?.recovered )</h5>
                 </div>
 
             </div>
@@ -135,10 +135,10 @@
                             <td>
                                 <b>@item.state</b>
 
-                                @if (item.delta.confirmed != 0)
+                                @if (item.delta?.confirmed != 0)
                                 {
                                     <i class="fa fa-arrow-circle-up" style="color:red"></i>
-                                    @item.delta.confirmed
+                                    @item.delta?.confirmed
                                 }
 
                             </td>
