@@ -40,10 +40,10 @@ namespace AspNetCoreTodo.Models
 
     public class Delta
     {
-        public int active { get; set; }
-        public int confirmed { get; set; }
-        public int deaths { get; set; }
-        public int recovered { get; set; }
+        public int? active { get; set; }
+        public int? confirmed { get; set; }
+        public int? deaths { get; set; }
+        public int? recovered { get; set; }
     }
 
     public class Statewise
@@ -55,6 +55,10 @@ namespace AspNetCoreTodo.Models
         public string lastupdatedtime { get; set; }
         public string recovered { get; set; }
         public string state { get; set; }
+        public string deltaconfirmed { get; set; }
+        public string deltadeaths { get; set; }
+        public string deltarecovered { get; set; }
+        public List<DistrictData> districtData { get; set; }
     }
 
     public class Tested

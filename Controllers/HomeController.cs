@@ -26,31 +26,56 @@ namespace AspNetCoreTodo.Controllers
 
         public IActionResult Index()
         {
+            //chartsModel = GetDataWithoutCache();
+            var chartsModel = GetDataWithCache();
+            return View(chartsModel);
+        }
 
-            ChartsModel chartsModel = new ChartsModel();
+        private ChartsModel GetDataWithCache()
+        {
+            ChartsModel chartsModel;
             bool isExist = memoryCache.TryGetValue("Data", out chartsModel);
             if (!isExist)
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://api.covid19india.org/data.json");
-                request.Method = "GET";
-                string nationDataModelString = string.Empty;
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    Stream dataStream = response.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    nationDataModelString = reader.ReadToEnd();
-                    reader.Close();
-                    dataStream.Close();
-                }
+                chartsModel = GetDataFromThirdParty();
+
                 var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromMinutes(15));
-                var nationDataModel = JsonConvert.DeserializeObject<NationDataModel>(nationDataModelString);
-                chartsModel = ChartsModelMapper.Map(nationDataModel);
-                var stringModel = JsonConvert.SerializeObject(chartsModel);
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
                 memoryCache.Set("Data", chartsModel, cacheEntryOptions);
             }
-            
-            return View(chartsModel);
+
+            return chartsModel;
+        }
+
+        private static ChartsModel GetDataFromThirdParty()
+        {
+            ChartsModel chartsModel;
+            string nationUrl = "https://api.covid19india.org/data.json";
+            string nationDataModelString = GetData(nationUrl);
+            var nationDataModel = JsonConvert.DeserializeObject<NationDataModel>(nationDataModelString);
+
+            var stateUrl = "https://api.covid19india.org/v2/state_district_wise.json";
+            string stateDistrictDataModelString = GetData(stateUrl);
+            var stateDistrictModel = JsonConvert.DeserializeObject<List<StateDistrictModel>>(stateDistrictDataModelString);
+            chartsModel = ChartsModelMapper.Map(nationDataModel, stateDistrictModel);
+            return chartsModel;
+        }
+
+        private static string GetData(string url)
+        {
+            string nationDataModelString;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                nationDataModelString = reader.ReadToEnd();
+                reader.Close();
+                dataStream.Close();
+            }
+
+            return nationDataModelString;
         }
 
         public IActionResult About()
