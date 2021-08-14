@@ -149,45 +149,45 @@
                                 {
                                     <i class="fa fa-arrow-circle-up" style="color:red"></i>
                                     @item.delta?.confirmed
-                                    <div id="@("demo" + i)" class="collapse">
-                                        <table id="example1" class="display responsive nowrap" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>District</th>
-                                                    <th>Confirmed</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{int j = 0;}
-                                                @foreach (var districtData in item.districtData)
-                                                {
-                                                    <tr>
-                                                        <td>@(j + 1)</td>
-                                                        <td>
-                                                            @districtData.district
-                                                            @if (districtData.delta.confirmed != 0)
-                                                            {
-                                                                <i class="fa fa-arrow-circle-up" style="color:red"></i>
-                                                                @districtData.delta.confirmed
-                                                            }
-                                                        </td>
-                                                        <td>@districtData.confirmed</td>
-                                                    </tr>
-                                                    j++;
-                                                }
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>District</th>
-                                                    <th>Confirmed</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-
                                 }
+
+                                <div id="@("demo" + i)" class="collapse">
+                                    <table id="example1" class="display responsive nowrap" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>District</th>
+                                                <th>Confirmed</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{int j = 0;}
+                                            @foreach (var districtData in item.districtData)
+                                            {
+                                                <tr>
+                                                    <td>@(j + 1)</td>
+                                                    <td>
+                                                        @districtData.district
+                                                        @if (districtData.delta?.confirmed != 0)
+                                                        {
+                                                            <i class="fa fa-arrow-circle-up" style="color:red"></i>
+                                                            @districtData.delta.confirmed
+                                                        }
+                                                    </td>
+                                                    <td>@districtData.confirmed</td>
+                                                </tr>
+                                                j++;
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>District</th>
+                                                <th>Confirmed</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
 
                             </td>
                             <td><p class="text-info"><b>@item.confirmed</b></p> @*( <i class="fa fa-arrow-circle-up" style="color:red"></i> @item.delta.confirmed )*@</td>

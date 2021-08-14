@@ -15,7 +15,7 @@ namespace AspNetCoreTodo.Controllers
 {
     public class HomeController : Controller
     {
-        private RestClient client = new RestClient("https://api.covid19india.org/");
+        private RestClient client = new RestClient("https://data.covid19india.org/");
 
         private readonly IMemoryCache memoryCache;
 
@@ -50,11 +50,11 @@ namespace AspNetCoreTodo.Controllers
         private static ChartsModel GetDataFromThirdParty()
         {
             ChartsModel chartsModel;
-            string nationUrl = "https://api.covid19india.org/data.json";
+            string nationUrl = "https://data.covid19india.org/data.json";
             string nationDataModelString = GetData(nationUrl);
             var nationDataModel = JsonConvert.DeserializeObject<NationDataModel>(nationDataModelString);
 
-            var stateUrl = "https://api.covid19india.org/v2/state_district_wise.json";
+            var stateUrl = "https://data.covid19india.org/v2/state_district_wise.json";
             string stateDistrictDataModelString = GetData(stateUrl);
             var stateDistrictModel = JsonConvert.DeserializeObject<List<StateDistrictModel>>(stateDistrictDataModelString);
             chartsModel = ChartsModelMapper.Map(nationDataModel, stateDistrictModel);
